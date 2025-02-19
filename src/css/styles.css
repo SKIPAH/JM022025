@@ -1,1 +1,5 @@
-/*# sourceMappingURL=styles.css.map */
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
+}/*# sourceMappingURL=styles.css.map */
