@@ -1,5 +1,6 @@
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
 
+//learning MaterialUI
 const serviceList = ["Service 1", "Service 2", "Service 3"];
 
 export default function SecondPage() {
