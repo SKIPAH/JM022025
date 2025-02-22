@@ -1,12 +1,18 @@
 import { Button } from "@mui/material";
-import React from "react";
 
+interface AddChartProps {
+  onAddChart: () => void;
+}
 
-
-
-function AddChart() {
+function AddChart({ onAddChart }: AddChartProps) {
   return (
-    <Button type="submit" variant="contained" color="primary">
+    <Button
+      sx={{ width: 200, my: 2 }}
+      onClick={onAddChart}
+      type="button"
+      variant="contained"
+      color="primary"
+    >
       + Add Chart
     </Button>
   );

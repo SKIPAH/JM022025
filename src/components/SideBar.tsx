@@ -1,19 +1,36 @@
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-
 import logoipsum from "../images/logoipsum.svg";
 import SearchBar from "./SearchBar";
-import { List, ListItem } from "@mui/material";
-
+import { Menu, MenuItem, List, ListItem } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
-
 import IconButton from "@mui/material/IconButton";
 import { MoreVert } from "@mui/icons-material";
-
-const drawerWidth = 250;
+import { useState } from "react";
+import { Edit, Delete } from "@mui/icons-material";
+import ModalWindow from "./ModalWindow";
 
 export default function SideBar() {
+  const drawerWidth = 250;
+  const [listItems, setListItems] = useState<string[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const open = Boolean(anchorEl);
+
+  const handleAddChart = (chartName: string) => {
+    setListItems([...listItems, chartName]);
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedIndex(index);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    setSelectedIndex(null);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -25,6 +42,8 @@ export default function SideBar() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            alignContent: "center",
+            alignItems: "center",
           },
         }}
         variant="permanent"
@@ -42,25 +61,82 @@ export default function SideBar() {
           alt="Logoipsum logo for sidebar"
           src={logoipsum}
         />
-        <SearchBar></SearchBar>
-        <List
-          sx={{ width: "100%", maxWidth: 320, bgcolor: "background.paper" }}
-        >
-          {[1, 2, 3, 4].map((value) => (
-            <ListItem
-              key={value}
-              disableGutters
-              secondaryAction={
-                <IconButton aria-label="comment">
-                  <MoreVert />
-                </IconButton>
-              }
-            >
-              <ListItemText primary={`Line item ${value}`} />
-            </ListItem>
-          ))}
-        </List>
+        <SearchBar />
+        <ModalWindow onAddChart={handleAddChart}></ModalWindow>
+
+        {
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: 320,
+              bgcolor: "background.paper",
+              alignContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {listItems.length === 0 ? (
+              <ListItem
+                sx={{
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ListItemText
+                  sx={{ alignContent: "center", alignItems: "center" }}
+                  primary="No Charts"
+                />
+              </ListItem>
+            ) : (
+              listItems.map((item, index) => (
+                <ListItem
+                  key={index}
+                  disableGutters
+                  secondaryAction={
+                    <IconButton
+                      aria-label="comment"
+                      id="demo-positioned-button"
+                      aria-controls={open ? "demo-positioned-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={(e) => handleClick(e, index)}
+                    >
+                      <MoreVert />
+                    </IconButton>
+                  }
+                >
+                  <ListItemText primary={item} />
+                </ListItem>
+              ))
+            )}
+          </List>
+        }
       </Drawer>
+
+      {
+        <Menu
+          id={`menu-${selectedIndex}`}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": `menu-button-${selectedIndex}`,
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
+          <MenuItem onClick={handleClose}>
+            <Edit sx={{ mr: 1 }} />
+            Edit
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Delete sx={{ mr: 1 }} />
+            Delete
+          </MenuItem>
+        </Menu>
+      }
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}

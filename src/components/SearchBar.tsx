@@ -1,7 +1,6 @@
 import { TextField, Stack, InputAdornment } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Search } from "@mui/icons-material";
-import AddChart from "./AddChart";
 
 type FormValues = {
   search: string;
@@ -18,7 +17,7 @@ export default function SearchBar() {
   const { errors } = formState;
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -39,11 +38,12 @@ export default function SearchBar() {
                 ),
               },
             }}
+            /*
             {...register("search", {})}
             error={!!errors.search}
             helperText={errors.search?.message}
+            */
           />
-          <AddChart />
         </Stack>
       </form>
     </>
