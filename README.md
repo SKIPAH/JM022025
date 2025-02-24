@@ -1,7 +1,3 @@
-
-  <h3 align="center">JM022025</h3>
-
-
 ### Installation
 
 1. Clone the repository
@@ -20,12 +16,3 @@
    ```sh
    npm run dev
    ```
-
-## Usage
-
-Project does not meet the final requirements for the task, but features that I managed to partially learn and implement are shown.
-
-
-
-
-
