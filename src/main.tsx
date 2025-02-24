@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
-import { router } from "./router";
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
+import App from "./App";
 
 const theme = createTheme({
   palette: {
@@ -30,6 +30,8 @@ const theme = createTheme({
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={theme}>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <App></App>
+    </BrowserRouter>
   </ThemeProvider>
 );

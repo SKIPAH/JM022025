@@ -29,14 +29,12 @@ export default function SearchBar() {
             label="Search..."
             variant="filled"
             placeholder=""
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
             }}
             /*
             {...register("search", {})}

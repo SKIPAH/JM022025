@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -8,7 +8,7 @@ import dataseries from "../data/dataseries.json";
 import { useState } from "react";
 
 interface ModalWindowProps {
-  onAddChart: (chartName: string) => void;
+  onAddChart: (chartName: string, selectedChart: string) => void;
 }
 
 const style = {
@@ -71,12 +71,13 @@ const allDataseries = dataseries.map((series) => ({
 export default function ModalWindow({ onAddChart }: ModalWindowProps) {
   const [open, setOpen] = useState(false);
   const [chartName, setChartName] = useState("");
+  const [selectedChart, setSelectedChart] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleAddChart = () => {
     if (chartName) {
-      onAddChart(chartName);
+      onAddChart(chartName, selectedChart);
       handleClose();
       setChartName("");
     }
@@ -146,6 +147,7 @@ export default function ModalWindow({ onAddChart }: ModalWindowProps) {
             id="outlined-required"
             label="Dataseries"
             select
+            onChange={(e) => setSelectedChart(e.target.value)}
           >
             {allDataseries.map((option) => (
               <MenuItem key={option.value} value={option.value}>

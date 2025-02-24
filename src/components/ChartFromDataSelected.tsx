@@ -1,9 +1,19 @@
+import { Button } from "@mui/material";
 import dataseries from "../data/dataseries.json";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { useState } from "react";
 
-export default function ChartFromData() {
-  const dataSensor = dataseries[0].dataseries.map((point) => ({
+export default function ChartFromDataSelected() {
+  const [chartIndex, setChartIndex] = useState(0);
+  const sensorButtons = [
+    "Sensor_A",
+    "Sensor_B",
+    "Sensor_C",
+    "Sensor_D",
+    "Sensor_E",
+  ];
+  const dataSensor = dataseries[chartIndex].dataseries.map((point) => ({
     x: new Date(point.date).getTime(),
     y: point.value,
   }));
@@ -40,7 +50,7 @@ export default function ChartFromData() {
     series: [
       {
         type: "line",
-        name: dataseries[0].name,
+        name: dataseries[chartIndex].name,
         data: dataSensor,
       },
     ],
@@ -59,6 +69,11 @@ export default function ChartFromData() {
   return (
     <div>
       <h1>Sensor Data Chart</h1>
+      {sensorButtons.map((sensor, index) => (
+        <Button key={sensor} onClick={() => setChartIndex(index)}>
+          {sensor}
+        </Button>
+      ))}
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );

@@ -31,6 +31,15 @@ export default function SideBar() {
     setSelectedIndex(null);
   };
 
+  const handleDeleteListItem = () => {
+    if (selectedIndex !== null) {
+      setListItems((prevItems) =>
+        prevItems.filter((_, index) => index !== selectedIndex)
+      );
+      handleClose();
+    }
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -70,22 +79,11 @@ export default function SideBar() {
               width: "100%",
               maxWidth: 320,
               bgcolor: "background.paper",
-              alignContent: "center",
-              alignItems: "center",
             }}
           >
             {listItems.length === 0 ? (
-              <ListItem
-                sx={{
-                  justifyContent: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ListItemText
-                  sx={{ alignContent: "center", alignItems: "center" }}
-                  primary="No Charts"
-                />
+              <ListItem>
+                <ListItemText primary="No Charts" />
               </ListItem>
             ) : (
               listItems.map((item, index) => (
@@ -131,7 +129,7 @@ export default function SideBar() {
             <Edit sx={{ mr: 1 }} />
             Edit
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleDeleteListItem}>
             <Delete sx={{ mr: 1 }} />
             Delete
           </MenuItem>
